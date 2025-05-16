@@ -1,0 +1,137 @@
+
+// Dizilerde pin ve işlev bilgileri
+const char* pinNames[] = {
+  "EN",
+  "A0",
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "A5",
+  "A6",
+  "A7",
+  "DAC1",
+  "DAC2",
+  "D15",
+  "D14",
+  "D13",
+  "D12",
+  "VBAT",
+  "5V",
+  "GND",
+  "GND",
+  "3V3",
+  "3V3",
+  "D11",
+  "D10",
+  "D9",
+  "D8",
+  "D7",
+  "D6",
+  "D5",
+  "D4",
+  "D3",
+  "D2",
+  "D1",
+  "D0",
+  "GND"
+  
+};
+
+const char* functionNames[] = {
+  "RES butonuna bağlıdır ve sistemi sıfırlamk için kullanılır",
+  "Analog Giriş pinidir. Fakat gerektiğinde dijital çıkış pini olarak da kullanılır. Bu pinlerden sekiz tane var. ",
+  "Analog Giriş pinidir. Fakat gerektiğinde dijital çıkış pini olarak da kullanılır. Bu pinlerden sekiz tane var. ",
+  "Analog Giriş pinidir. Fakat gerektiğinde dijital çıkış pini olarak da kullanılır. Bu pinlerden sekiz tane var. ",
+  "Analog Giriş pinidir. Fakat gerektiğinde dijital çıkış pini olarak da kullanılır. Bu pinlerden sekiz tane var. ",
+  "Analog Giriş pinidir. Fakat gerektiğinde dijital giriş, çıkış ve PMW pini olarak da kullanılır. Bu pinlerden sekiz tane var.",
+  "Analog Giriş pinidir. Fakat gerektiğinde dijital giriş, çıkış ve PMW pini olarak da kullanılır. Bu pinlerden sekiz tane var.",
+  "Analog Giriş pinidir. Fakat gerektiğinde dijital giriş, çıkış ve PMW pini olarak da kullanılır. Bu pinlerden sekiz tane var.",
+  "Analog Giriş pinidir. Fakat gerektiğinde dijital giriş, çıkış ve PMW pini olarak da kullanılır. Bu pinlerden sekiz tane var.",
+  "Dijital giriş, dijital çıkış, analog giriş ve PWM pini olarak kullanılır. Bu pinlerden iki tane var. ",
+  "Dijital giriş, dijital çıkış, analog giriş ve PWM pini olarak kullanılır. Bu pinlerden iki tane var. ",
+  "Dijital Giriş - Çıkış pinidir. Analog giriş ve PWM olarak da kulanılır. Bu pinlerden on beş tane var. ",
+  "Dijital Giriş - Çıkış pinidir. Analog giriş ve PWM olarak da kulanılır. Bu pinlerden on beş tane var. ",
+  "Dijital Giriş - Çıkış pinidir. Analog giriş ve PWM olarak da kulanılır. Bu pinlerden on beş tane var. ",
+  "Dijital Giriş - Çıkış pinidir. RGB LED bağlıdır. Analog giriş ve PWM olarak da kulanılır. Bu pinlerden on altı tane var. ",
+  "Lipo Bataryadan Kartı beslemek için kullanılır. Bataryanın + ucunu bağlamak için kullanılır. Bu pinlerden bir tane var.",
+  "Harici bağlanan üniteleri beslemek için kullanılır. Bu pinlerden bir tane var. ",
+  "Tüm güç ve lojik bağlantı pinleri için devrenin ortak toprak hattı olarak kullanılır. Bu pinlerden üç tane var. ",
+  "Tüm güç ve lojik bağlantı pinleri için devrenin ortak toprak hattı olarak kullanılır. Bu pinlerden üç tane var. ",
+  "Harici bağlanan üniteleri beslemek için kullanılır. Bu pinlerden iki tane var. ",
+  "Harici bağlanan üniteleri beslemek için kullanılır. Bu pinlerden iki tane var. ",
+  "Dijital Giriş - Çıkış pinidir. SCL pinidir. Analog giriş ve PWM olarak da kulanılır. Bu pinlerden on altı tane var.",
+  "Dijital Giriş - Çıkış pinidir. SDA pinidir. Analog giriş ve PWM olarak da kulanılır. Bu pinlerden on altı tane var.",
+  "Dijital Giriş - Çıkış pinidir. Analog giriş ve PWM olarak da kulanılır. Bu pinlerden on altı tane var. ",
+  "Dijital Giriş - Çıkış pinidir. Analog giriş ve PWM olarak da kulanılır. Bu pinlerden on altı tane var. ",
+  "Dijital Giriş - Çıkış pinidir. MOSI pinidir. PWM olarak da kulanılır. Bu pinlerden on altı tane var.",
+  "Dijital Giriş - Çıkış pinidir. MISO pinidir. PWM olarak da kulanılır. Bu pinlerden on altı tane var.",
+  "Dijital Giriş - Çıkış pinidir. SCK pinidir. PWM olarak da kulanılır. Bu pinlerden on altı tane var.",
+  "Dijital Giriş - Çıkış pinidir. CS pinidir. PWM olarak da kulanılır. Bu pinlerden on altı tane var.",
+  "Dijital Giriş - Çıkış pinidir. RX pinidir. PWM olarak da kulanılır. Bu pinlerden on altı tane var.",
+  "Dijital Giriş - Çıkış pinidir. TX pinidir. PWM olarak da kulanılır. Bu pinlerden on altı tane var.",
+  "Dijital Giriş - Çıkış pinidir. PWM1 pinidir. PWM olarak da kulanılır. Bu pinlerden on altı tane var.",
+  "Dijital Giriş - Çıkış pinidir. PWM0 pinidir. PWM olarak da kulanılır. Bu pinlerden on altı tane var.",
+  "Tüm güç ve lojik bağlantı pinleri için devrenin ortak toprak hattı olarak kullanılır. Bu pinlerden üç tane var. "
+};
+
+int score = 0;  // Oyuncunun puanı
+
+void setup() {
+  // Başlangıçta seri haberleşmeyi başlat
+  Serial.begin(9600);
+  delay(5000);
+
+  // Kullanıcıdan başlamak isteyip istemediğini al
+  Serial.println("=== Pin Tahmin Oyunu ===");
+  Serial.println("Oyun hakkında bilgi: Her 10 saniyede bir rastgele bir işlev adı belirlenir.");
+  Serial.println("Siz de bu işlemin hangi pine ait olduğunu tahmin etmeye çalışın!");
+  Serial.println("Oynamak için pin adını girerek Enter tuşuna basın...");
+  delay(5000);
+}
+
+void correctGuess() {
+  Serial.println("Tebrikler, doğru tahmin!");
+  score++;
+  Serial.println("Puan: " + String(score));
+}
+
+void wrongGuess(int randomIndex) {
+  Serial.println("Maalesef, yanlış tahmin.");
+  Serial.print("Doğru cevap: ");
+  Serial.println(pinNames[randomIndex]);
+  score = max(0, score - 1);
+  Serial.println("Puan: " + String(score));
+}
+
+void loop() {
+  // Oyun başlasın
+  Serial.println("");
+  Serial.println("Tahmin Et!");
+
+  // Her 10 saniyede bir rastgele bir işlev seç
+  int randomIndex = random(sizeof(functionNames) / sizeof(functionNames[0]));
+
+  // Rastgele seçilen işlemin adını Serial Monitor'e yazdır
+  Serial.print("\nRastgele Seçilen İşlev: ");
+  Serial.println(functionNames[randomIndex]);
+
+  // Kullanıcıdan pin tahmini al
+  Serial.println("Bu işlev hangi pine ait? (Örn: D2): ");
+
+  // Kullanıcının tahminini oku
+  while (!Serial.available()) {
+    // Bekle, kullanıcının girişini alana kadar devam et
+  }
+  String userGuess = Serial.readStringUntil('\n');
+
+  // Kullanıcının tahminini kontrol et
+  if (userGuess.equals(pinNames[randomIndex])) {
+    correctGuess();
+  } else {
+    wrongGuess(randomIndex);
+  }
+Serial.println("10 Saniye Mola!");
+  // 10 saniye bekle
+  delay(10000);
+}
